@@ -30,11 +30,10 @@ import edu.emory.mathcs.nlp.component.tokenizer.token.Token;
  */
 public class TokenizerDemo {
 	// @Test
-	public List<List<Token>> tokenizeRaw() throws Exception
+	public List<List<Token>> tokenizeRaw(String inputFile) throws Exception
 	{
 		List<List<Token>> sentenceList = new ArrayList<List<Token>>();
 		Tokenizer tokenizer = new EnglishTokenizer();
-		String inputFile = "c:\\Users\\dsethi\\Downloads\\TheFountainhead.txt";
 		InputStream in = IOUtils.createFileInputStream(inputFile);
 		
 		for (List<Token> tokens : tokenizer.segmentize(in))
@@ -44,20 +43,24 @@ public class TokenizerDemo {
 		
 		return sentenceList;
 	}
+	
+	
 
 	// @Test
-	public void tokenizeLine() throws Exception {
+	public List<List<Token>> tokenizeLine(String inputFile) throws Exception {
 		Tokenizer tokenizer = new EnglishTokenizer();
-		String inputFile = "c:\\Users\\dsethi\\Downloads\\of_human_bondage.txt";
+		List<List<Token>> paragraphList = new ArrayList<List<Token>>();
+
 		BufferedReader in = IOUtils.createBufferedReader(inputFile);
 		List<Token> tokens;
 		String line;
 
 		while ((line = in.readLine()) != null) {
 			tokens = tokenizer.tokenize(line);
-			System.out.println(tokens);
+			paragraphList.add(tokens);
 		}
 
 		in.close();
+		return paragraphList;
 	}
 }

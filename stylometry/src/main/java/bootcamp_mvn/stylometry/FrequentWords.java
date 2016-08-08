@@ -22,7 +22,7 @@ public class FrequentWords {
         }
     }
 
-    private static Map<String, Integer> populateWordMap(String path) throws FileNotFoundException, IOException {
+    public static Map<String, Integer> populateWordMap(String path) throws FileNotFoundException, IOException {
         Map<String,Integer> wordMap = new HashMap<String, Integer>();
         List<String> words = getWordsFromLines(readLines(path));
         for (String word : words) {
@@ -83,7 +83,7 @@ public class FrequentWords {
         return lines;
     }
 
-    private static List<String> mostFrequentWords (int n, Map<String, Integer> wordMap) {
+    public static List<String> mostFrequentWords (int n, Map<String, Integer> wordMap) {
         List<String> mostFrequentWords = sortFrequentWords(wordMap);
         return mostFrequentWords.subList(0, n);
     }

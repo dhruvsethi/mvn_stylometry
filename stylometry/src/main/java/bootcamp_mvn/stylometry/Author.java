@@ -1,5 +1,6 @@
 package bootcamp_mvn.stylometry;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -7,7 +8,7 @@ import java.util.TreeMap;
 public class Author {
 	String Name;
 	List<Book> bookList;
-	private Map<String, Integer> wordFreq = new TreeMap<String, Integer>();
+	private List<String> wordFreq = new ArrayList<String>();
 	private Map<String, Integer> punctFreq = new TreeMap<String, Integer>();
 	private Integer paragraphLengthInSentences, paragraphLengthInWords, paragraphLengthInLetters, sentenceLengthInWords,
 			sentenceLengthInLetters;
@@ -19,10 +20,27 @@ public class Author {
 			this.setParagraphLengthInWords(book.getParagraphLengthInWords());
 			this.setSentenceLengthInLetters(book.getSentenceLengthInLetters());
 			this.setSentenceLengthInWords(book.getSentenceLengthInWords());
-//			this.setWordFreq();
+			this.setWordFreq(book.getWordFreq());
 //			this.setPunctFreq();
 
 		}
+	}
+
+	public List<String> getWordFreq() {
+		return wordFreq;
+	}
+
+	public void setWordFreq(List<String> wordFreq) {
+		this.wordFreq = wordFreq;
+	}
+
+	@Override
+	public String toString() {
+		return "Author [Name=" + Name + ", bookList=" + bookList + ", wordFreq=" + wordFreq + ", punctFreq=" + punctFreq
+				+ ", paragraphLengthInSentences=" + paragraphLengthInSentences + ", paragraphLengthInWords="
+				+ paragraphLengthInWords + ", paragraphLengthInLetters=" + paragraphLengthInLetters
+				+ ", sentenceLengthInWords=" + sentenceLengthInWords + ", sentenceLengthInLetters="
+				+ sentenceLengthInLetters + "]";
 	}
 
 	public String getName() {
@@ -46,8 +64,7 @@ public class Author {
 	}
 
 	public void setParagraphLengthInSentences(Integer paragraphLengthInSentences) {
-		paragraphLengthInSentences = (this.getParagraphLengthInSentences() * this.bookList.size() + paragraphLengthInSentences)
-				/ (this.getBookList().size() + 1);
+	
 		this.paragraphLengthInSentences = paragraphLengthInSentences;
 	}
 
@@ -56,8 +73,7 @@ public class Author {
 	}
 
 	public void setParagraphLengthInWords(Integer paragraphLengthInWords) {
-		paragraphLengthInWords = (this.getParagraphLengthInWords() * this.bookList.size() + paragraphLengthInWords)
-				/ (this.getBookList().size() + 1);
+
 		this.paragraphLengthInWords = paragraphLengthInWords;
 	}
 
@@ -66,8 +82,7 @@ public class Author {
 	}
 
 	public void setParagraphLengthInLetters(Integer paragraphLengthInLetters) {
-		paragraphLengthInLetters = (this.getParagraphLengthInLetters() * this.bookList.size() + paragraphLengthInLetters)
-				/ (this.getBookList().size() + 1);
+
 		this.paragraphLengthInLetters = paragraphLengthInLetters;
 	}
 
@@ -76,8 +91,7 @@ public class Author {
 	}
 
 	public void setSentenceLengthInWords(Integer sentenceLengthInWords) {
-		sentenceLengthInWords = (this.getSentenceLengthInWords() * this.bookList.size() + sentenceLengthInWords)
-				/ (this.getBookList().size() + 1);
+
 		this.sentenceLengthInWords = sentenceLengthInWords;
 	}
 
@@ -86,8 +100,7 @@ public class Author {
 	}
 
 	public void setSentenceLengthInLetters(Integer sentenceLengthInLetters) {
-		sentenceLengthInLetters = (this.getSentenceLengthInLetters() * this.bookList.size() + sentenceLengthInLetters)
-				/ (this.getBookList().size() + 1);
+	
 		this.sentenceLengthInLetters = sentenceLengthInLetters;
 	}
 

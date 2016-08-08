@@ -1,5 +1,6 @@
 package bootcamp_mvn.stylometry;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -7,11 +8,12 @@ import java.util.TreeMap;
 import edu.emory.mathcs.nlp.component.tokenizer.token.Token;
 
 public class Book {
-	private Map<String, Integer> wordFreq = new TreeMap<String, Integer>();
+	private List<String> wordFreq = new ArrayList<String>();
 	private Map<String, Integer> punctFreq = new TreeMap<String, Integer>();
 	private Integer paragraphLengthInSentences, paragraphLengthInWords, paragraphLengthInLetters, sentenceLengthInWords,
 			sentenceLengthInLetters;
 
+	private String bookName, bookPath;
 	public void debug() {
 		System.out.println("Book [wordFreq=" + wordFreq + ", punctFreq=" + punctFreq + ", paragraphLengthInSentences="
 				+ paragraphLengthInSentences + ", paragraphLengthInWords=" + paragraphLengthInWords
@@ -19,11 +21,22 @@ public class Book {
 				+ sentenceLengthInWords + ", sentenceLengthInLetters=" + sentenceLengthInLetters + "]");
 	}
 
-	public Map<String, Integer> getWordFreq() {
+	@Override
+	public String toString() {
+		return "Book [wordFreq=" + wordFreq + ", punctFreq=" + punctFreq + ", paragraphLengthInSentences="
+				+ paragraphLengthInSentences + ", paragraphLengthInWords=" + paragraphLengthInWords
+				+ ", paragraphLengthInLetters=" + paragraphLengthInLetters + ", sentenceLengthInWords="
+				+ sentenceLengthInWords + ", sentenceLengthInLetters=" + sentenceLengthInLetters + ", bookName="
+				+ bookName + ", bookPath=" + bookPath + "]";
+	}
+
+	
+
+	public List<String> getWordFreq() {
 		return wordFreq;
 	}
 
-	public void setWordFreq(Map<String, Integer> wordFreq) {
+	public void setWordFreq(List<String> wordFreq) {
 		this.wordFreq = wordFreq;
 	}
 
@@ -91,6 +104,22 @@ public class Book {
 			paragraphNumber++;
 		}
 		return Double.valueOf(paragraphLength / paragraphNumber);
+	}
+
+	public String getBookPath() {
+		return bookPath;
+	}
+
+	public void setBookPath(String bookPath) {
+		this.bookPath = bookPath;
+	}
+
+	public String getBookName() {
+		return bookName;
+	}
+
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
 	}
 
 }
