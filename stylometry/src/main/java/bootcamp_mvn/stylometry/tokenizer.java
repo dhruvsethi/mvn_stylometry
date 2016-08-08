@@ -15,15 +15,14 @@
  */
 package bootcamp_mvn.stylometry;
 
-import edu.emory.mathcs.nlp.common.util.IOUtils;
-import edu.emory.mathcs.nlp.common.util.Joiner;
-import edu.emory.mathcs.nlp.component.tokenizer.EnglishTokenizer;
-import edu.emory.mathcs.nlp.component.tokenizer.Tokenizer;
-import edu.emory.mathcs.nlp.component.tokenizer.token.Token;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.util.List;
+
+import edu.emory.mathcs.nlp.common.util.IOUtils;
+import edu.emory.mathcs.nlp.component.tokenizer.EnglishTokenizer;
+import edu.emory.mathcs.nlp.component.tokenizer.Tokenizer;
+import edu.emory.mathcs.nlp.component.tokenizer.token.Token;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
