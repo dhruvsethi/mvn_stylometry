@@ -17,6 +17,7 @@ package bootcamp_mvn.stylometry;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.emory.mathcs.nlp.common.util.IOUtils;
@@ -27,36 +28,36 @@ import edu.emory.mathcs.nlp.component.tokenizer.token.Token;
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public class TokenizerDemo
-{
-//	@Test
-	public void tokenizeRaw() throws Exception
+public class TokenizerDemo {
+	// @Test
+	public List<List<Token>> tokenizeRaw() throws Exception
 	{
+		List<List<Token>> sentenceList = new ArrayList<List<Token>>();
 		Tokenizer tokenizer = new EnglishTokenizer();
-		String inputFile = "c:\\Users\\dsethi\\Downloads\\of_human_bondage.txt";
+		String inputFile = "c:\\Users\\dsethi\\Downloads\\the_moon_and_sixpence.txt";
 		InputStream in = IOUtils.createFileInputStream(inputFile);
 		
 		for (List<Token> tokens : tokenizer.segmentize(in))
-			System.out.println(tokens);	
+			sentenceList.add(tokens);	
 		
 		in.close();
+		
+		return sentenceList;
 	}
-	
-//	@Test
-	public void tokenizeLine() throws Exception
-	{
+
+	// @Test
+	public void tokenizeLine() throws Exception {
 		Tokenizer tokenizer = new EnglishTokenizer();
 		String inputFile = "c:\\Users\\dsethi\\Downloads\\of_human_bondage.txt";
 		BufferedReader in = IOUtils.createBufferedReader(inputFile);
 		List<Token> tokens;
 		String line;
-		
-		while ((line = in.readLine()) != null)
-		{
+
+		while ((line = in.readLine()) != null) {
 			tokens = tokenizer.tokenize(line);
-			System.out.println(tokens);	
+			System.out.println(tokens);
 		}
-		
+
 		in.close();
 	}
 }
