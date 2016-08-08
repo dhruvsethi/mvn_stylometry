@@ -1,5 +1,7 @@
 package bootcamp_mvn.stylometry;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,16 +11,31 @@ import edu.emory.mathcs.nlp.component.tokenizer.token.Token;
 public class App {
 	public static void main(String[] args) throws Exception {
 		Author sommerset = new Author();
-		Book testBook = new Book();
-		Scanner in = new Scanner(System.in);
+		Book testBook = new Book(null, null);
 
-		sommerset = initSommerset();
-		System.out.println("Enter book path");
-		testBook.setBookPath(in.next());
-		in.close();
+		System.out.println("Compare to 1-The Magician, 2-War and Peace, 3-The Fountainhead");
+		setTestBook(testBook);
 
 		initTestBook(testBook);
 		System.out.println(classify(sommerset, testBook));
+
+	}
+
+	private static void setTestBook(Book testBook) {
+		Scanner in = new Scanner(System.in);
+
+		switch (in.nextInt()) {
+		case 1:
+			testBook.setBookPath("c:\\Users\\dsethi\\Downloads\\the_magician.txt");
+			break;
+		case 2:
+			testBook.setBookPath("c:\\Users\\dsethi\\Downloads\\WarAndPeace.txt");
+			break;
+		case 3:
+			testBook.setBookPath("c:\\Users\\dsethi\\Downloads\\TheFountainhead.txt");
+			break;
+		}
+		in.close();
 
 	}
 
@@ -34,11 +51,13 @@ public class App {
 
 	}
 
-	private static String classify(Author sommerset, Book testBook) {
+	private static String classify(Author sommerset, Book testBook) throws FileNotFoundException, IOException {
 		Integer sommersetParaLength = sommerset.getParagraphLengthInWords(),
 				sommersetSentenceLength = sommerset.getSentenceLengthInWords(),
 				testParaLength = testBook.getParagraphLengthInWords(),
 				testSentenceLength = testBook.getSentenceLengthInWords(), score = 0;
+		testBook.setWordFreq(
+				FrequentWords.mostFrequentWords(15, FrequentWords.populateWordMap(testBook.getBookPath())));
 
 		if (sommersetParaLength * 1.1 > testParaLength && testParaLength > 0.9 * sommersetParaLength)
 			score++;
@@ -46,57 +65,22 @@ public class App {
 		if (sommersetSentenceLength * 1.1 > testSentenceLength && testSentenceLength > 0.9 * sommersetSentenceLength)
 			score++;
 
-		if (score > 1)
-			return "Same author";
+		if (compareTopWords(sommerset.getWordFreq(), testBook.getWordFreq()) > 0.9)
+			score++;
+
+		if (score == 3)
+			return "Sommerset";
 		else
 			return "Different author";
 	}
 
-	private static Author initSommerset() {
-		Author sommerset = new Author();
-		Double sentenceLengthInWords = 0.0, paragraphLengthInWords = 0.0;
-		List<List<Token>> paragraphList = new ArrayList<List<Token>>();
-		List<List<Token>> sentenceList = new ArrayList<List<Token>>();
-		FrequentWords wordFreq = new FrequentWords();
-		sommerset.setBookList(initBookList());
-		TokenizerDemo tokenize = new TokenizerDemo();
-		try {
-			for (Book book : sommerset.getBookList()) {
-				paragraphList = tokenize.tokenizeLine(book.getBookPath());
-				sentenceList = tokenize.tokenizeRaw(book.getBookPath());
-				paragraphLengthInWords += book.findParagraphLength(paragraphList);
-				sentenceLengthInWords += book.findSentenceLength(sentenceList);
-				book.setWordFreq(FrequentWords.mostFrequentWords(15, FrequentWords.populateWordMap(book.getBookPath())));
-			}
-			sommerset.setSentenceLengthInWords(sentenceLengthInWords.intValue() / sommerset.getBookList().size());
-			sommerset.setParagraphLengthInWords(paragraphLengthInWords.intValue() / sommerset.getBookList().size());
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static double compareTopWords(List<String> author, List<String> testBook) {
+		int count = 0;
+		for (String word : author) {
+			if (testBook.contains(word))
+				count++;
 		}
-
-		return sommerset;
-
-	}
-
-	private static List<Book> initBookList() {
-		List<Book> bookList = new ArrayList<Book>();
-		Book book1 = new Book();
-		book1.setBookName("Of Human Bondage");
-		book1.setBookPath("c:\\Users\\dsethi\\Downloads\\of_human_bondage.txt");
-
-		Book book2 = new Book();
-		book2.setBookName("Of Moon And Sixpence");
-		book2.setBookPath("c:\\Users\\dsethi\\Downloads\\the_moon_and_sixpence.txt");
-
-		Book book3 = new Book();
-		book3.setBookName("The Magician");
-		book3.setBookPath("c:\\Users\\dsethi\\Downloads\\the_magician.txt");
-
-		bookList.add(book1);
-		bookList.add(book2);
-		bookList.add(book3);
-
-		return bookList;
+		return (count * 100) / 15;
 	}
 
 }

@@ -14,6 +14,12 @@ public class Book {
 			sentenceLengthInLetters;
 
 	private String bookName, bookPath;
+
+	public Book(String name, String path) {
+		this.bookName = name;
+		this.bookPath = path;
+	}
+
 	public void debug() {
 		System.out.println("Book [wordFreq=" + wordFreq + ", punctFreq=" + punctFreq + ", paragraphLengthInSentences="
 				+ paragraphLengthInSentences + ", paragraphLengthInWords=" + paragraphLengthInWords
@@ -29,8 +35,6 @@ public class Book {
 				+ sentenceLengthInWords + ", sentenceLengthInLetters=" + sentenceLengthInLetters + ", bookName="
 				+ bookName + ", bookPath=" + bookPath + "]";
 	}
-
-	
 
 	public List<String> getWordFreq() {
 		return wordFreq;
