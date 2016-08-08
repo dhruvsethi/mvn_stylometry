@@ -7,7 +7,7 @@ package bootcamp_mvn.stylometry;
 public class App {
 	public static void main(String[] args) {
 
-		tokenizer tokenize = new tokenizer();
+		TokenizerDemo tokenize = new TokenizerDemo();
 		try {
 			tokenize.tokenizeRaw();
 		} catch (Exception e) {

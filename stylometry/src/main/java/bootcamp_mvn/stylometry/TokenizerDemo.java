@@ -27,7 +27,7 @@ import edu.emory.mathcs.nlp.component.tokenizer.token.Token;
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public class tokenizer
+public class TokenizerDemo
 {
 //	@Test
 	public void tokenizeRaw() throws Exception
