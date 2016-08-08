@@ -34,7 +34,7 @@ public class TokenizerDemo {
 	{
 		List<List<Token>> sentenceList = new ArrayList<List<Token>>();
 		Tokenizer tokenizer = new EnglishTokenizer();
-		String inputFile = "c:\\Users\\dsethi\\Downloads\\the_moon_and_sixpence.txt";
+		String inputFile = "c:\\Users\\dsethi\\Downloads\\TheFountainhead.txt";
 		InputStream in = IOUtils.createFileInputStream(inputFile);
 		
 		for (List<Token> tokens : tokenizer.segmentize(in))

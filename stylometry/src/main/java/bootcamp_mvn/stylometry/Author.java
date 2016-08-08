@@ -4,50 +4,50 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import edu.emory.mathcs.nlp.component.tokenizer.token.Token;
-
 public class Author {
-	Map<String, Integer> wordFreq = new TreeMap<String, Integer>();
-	Map<String, Integer> punctFreq = new TreeMap<String, Integer>();
-	Integer paragraphLengthInSentences, paragraphLengthInWords, paragraphLengthInLetters, sentenceLengthInWords,
+	String Name;
+	List<Book> bookList;
+	private Map<String, Integer> wordFreq = new TreeMap<String, Integer>();
+	private Map<String, Integer> punctFreq = new TreeMap<String, Integer>();
+	private Integer paragraphLengthInSentences, paragraphLengthInWords, paragraphLengthInLetters, sentenceLengthInWords,
 			sentenceLengthInLetters;
 
-	public void debug() {
-		System.out.println("Author [wordFreq=" + wordFreq + ", punctFreq=" + punctFreq + ", paragraphLengthInSentences="
-				+ paragraphLengthInSentences + ", paragraphLengthInWords=" + paragraphLengthInWords
-				+ ", paragraphLengthInLetters=" + paragraphLengthInLetters + ", sentenceLengthInWords="
-				+ sentenceLengthInWords + ", sentenceLengthInLetters=" + sentenceLengthInLetters + "]");
+	public void setMetrics() {
+		for (Book book : bookList) {
+			this.setParagraphLengthInLetters(book.getParagraphLengthInLetters());
+			this.setParagraphLengthInSentences(book.getParagraphLengthInSentences());
+			this.setParagraphLengthInWords(book.getParagraphLengthInWords());
+			this.setSentenceLengthInLetters(book.getSentenceLengthInLetters());
+			this.setSentenceLengthInWords(book.getSentenceLengthInWords());
+//			this.setWordFreq();
+//			this.setPunctFreq();
+
+		}
 	}
 
-	public Map<String, Integer> getWordFreq() {
-		return wordFreq;
+	public String getName() {
+		return Name;
 	}
 
-	public void setWordFreq(Map<String, Integer> wordFreq) {
-		this.wordFreq = wordFreq;
+	public void setName(String name) {
+		Name = name;
 	}
 
-	public Map<String, Integer> getPunctFreq() {
-		return punctFreq;
+	public List<Book> getBookList() {
+		return bookList;
 	}
 
-	public void setPunctFreq(Map<String, Integer> punctFreq) {
-		this.punctFreq = punctFreq;
+	public void setBookList(List<Book> bookList) {
+		this.bookList = bookList;
 	}
 
 	public Integer getParagraphLengthInSentences() {
 		return paragraphLengthInSentences;
 	}
 
-	public Integer getSentenceLengthInWords() {
-		return sentenceLengthInWords;
-	}
-
-	public void setSentenceLengthInWords(Integer sentenceLengthInWords) {
-		this.sentenceLengthInWords = sentenceLengthInWords;
-	}
-
 	public void setParagraphLengthInSentences(Integer paragraphLengthInSentences) {
+		paragraphLengthInSentences = (this.getParagraphLengthInSentences() * this.bookList.size() + paragraphLengthInSentences)
+				/ (this.getBookList().size() + 1);
 		this.paragraphLengthInSentences = paragraphLengthInSentences;
 	}
 
@@ -56,6 +56,8 @@ public class Author {
 	}
 
 	public void setParagraphLengthInWords(Integer paragraphLengthInWords) {
+		paragraphLengthInWords = (this.getParagraphLengthInWords() * this.bookList.size() + paragraphLengthInWords)
+				/ (this.getBookList().size() + 1);
 		this.paragraphLengthInWords = paragraphLengthInWords;
 	}
 
@@ -64,7 +66,19 @@ public class Author {
 	}
 
 	public void setParagraphLengthInLetters(Integer paragraphLengthInLetters) {
+		paragraphLengthInLetters = (this.getParagraphLengthInLetters() * this.bookList.size() + paragraphLengthInLetters)
+				/ (this.getBookList().size() + 1);
 		this.paragraphLengthInLetters = paragraphLengthInLetters;
+	}
+
+	public Integer getSentenceLengthInWords() {
+		return sentenceLengthInWords;
+	}
+
+	public void setSentenceLengthInWords(Integer sentenceLengthInWords) {
+		sentenceLengthInWords = (this.getSentenceLengthInWords() * this.bookList.size() + sentenceLengthInWords)
+				/ (this.getBookList().size() + 1);
+		this.sentenceLengthInWords = sentenceLengthInWords;
 	}
 
 	public Integer getSentenceLengthInLetters() {
@@ -72,25 +86,9 @@ public class Author {
 	}
 
 	public void setSentenceLengthInLetters(Integer sentenceLengthInLetters) {
+		sentenceLengthInLetters = (this.getSentenceLengthInLetters() * this.bookList.size() + sentenceLengthInLetters)
+				/ (this.getBookList().size() + 1);
 		this.sentenceLengthInLetters = sentenceLengthInLetters;
-	}
-
-	public Double findSentenceLength(List<List<Token>> sentenceList) {
-		Integer sentenceLength = 0, sentenceNumber = 0;
-		for (List<Token> sentence : sentenceList) {
-			sentenceLength += sentence.size();
-			sentenceNumber++;
-		}
-		return Double.valueOf(sentenceLength / sentenceNumber);
-	}
-
-	public Double findParagraphLength(List<List<Token>> paragraphList) {
-		Integer paragraphLength = 0, paragraphNumber = 0;
-		for (List<Token> paragraph : paragraphList) {
-			paragraphLength += paragraph.size();
-			paragraphNumber++;
-		}
-		return Double.valueOf(paragraphLength / paragraphNumber);
 	}
 
 }

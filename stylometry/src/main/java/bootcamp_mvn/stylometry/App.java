@@ -11,7 +11,7 @@ import edu.emory.mathcs.nlp.component.tokenizer.token.Token;
  */
 public class App {
 	public static void main(String[] args) {
-		Author leo = new Author();
+		Book leo = new Book();
 		Double sentenceLength, paragraphLength;
 		List<List<Token>> sentenceList = new ArrayList<List<Token>>();
 		TokenizerDemo tokenize = new TokenizerDemo();
